@@ -25,8 +25,8 @@ export default class Game {
 			this.paddleHeight,
 			this.boardGap,
 			((this.height - this.paddleHeight) / 2),
-			KEYS.a,
-			KEYS.z
+			KEYS.w,
+			KEYS.s
 		);
 
 		// instantiate player2
