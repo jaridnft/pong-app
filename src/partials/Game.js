@@ -1,6 +1,7 @@
-import { SVG_NS, KEYS } from '../settings';
+import { SVG_NS, KEYS, CONFIG } from '../settings';
 import Board from './Board'; //added to instantiate board class
 import Paddle from './Paddle';
+import Ball from './Ball';
 
 export default class Game {
 
@@ -14,9 +15,9 @@ export default class Game {
 		this.board = new Board(this.width, this.height);
 		
 		// setting up player values
-		this.paddleWidth = 8;
-		this.paddleHeight = 56;
-		this.boardGap = 10;
+		this.paddleWidth = CONFIG.paddleWidth;
+		this.paddleHeight = CONFIG.paddleHeight;
+		this.boardGap = CONFIG.boardGap;
 
 		// instantiate player1
 		this.player1 = new Paddle(
@@ -39,6 +40,13 @@ export default class Game {
 			KEYS.up,
 			KEYS.down
 		);
+
+		// instantiate ball
+		this.ball = new Ball(
+			CONFIG.ballRadius,
+			this.width,
+			this.height
+		);
 	}
 
 	render() {
@@ -57,6 +65,9 @@ export default class Game {
 		// render the paddles
 		this.player1.render(svg);
 		this.player2.render(svg);
+
+		// render the ball
+		this.ball.render(svg);
 	}
 
 }
