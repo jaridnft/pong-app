@@ -2,6 +2,7 @@ import { SVG_NS, KEYS, CONFIG } from '../settings';
 import Board from './Board'; // to instantiate classes
 import Paddle from './Paddle'; 
 import Ball from './Ball';
+import Score from './Score';
 
 export default class Game {
 
@@ -48,6 +49,10 @@ export default class Game {
 			this.height
 		);
 
+		// instantiate score1
+		this.score1 = new Score(this.width / 2 - 50, 30, 30);
+		this.score2 = new Score(this.width / 2 + 25, 30, 30);
+
 		document.addEventListener("keydown", event => {
       if (event.key === KEYS.spaceBar) {
 				this.pause = !this.pause;
@@ -78,6 +83,11 @@ export default class Game {
 
 		// render the ball
 		this.ball.render(svg, this.player1, this.player2);
+
+		// render the score
+		this.score1.render(svg, this.player1.score);
+		this.score2.render(svg, this.player2.score);
+
 	}
 
 }
