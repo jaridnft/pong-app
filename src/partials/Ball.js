@@ -8,6 +8,8 @@ export default class Ball {
     this.direction = CONFIG.direction;
     // set initial position of ball
     this.reset();
+
+    this.ping = new Audio('public/sounds/pong-01.wav');
   }
 
   reset() {
@@ -48,6 +50,7 @@ export default class Ball {
           (this.x + this.radius <= rightX) &&
           (this.y >= topY && this.y <= bottomY)) {
         this.vx = -this.vx;
+        this.ping.play();
       } else {
         this.vx = this.vx;
       }
@@ -59,11 +62,10 @@ export default class Ball {
       if ((this.x - this.radius <= rightX) && 
       (this.x - this.radius >= leftX) &&
       (this.y >= topY && this.y <= bottomY)) {
-        this.vx = -this.vx;
-        this.vy = -this.vy;
+        this.vx = -this.vx;       
+        this.ping.play();
       } else {
         this.vx = this.vx;
-        this.vy = this.vy;
       }
     }
   } 

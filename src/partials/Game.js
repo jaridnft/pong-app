@@ -28,7 +28,8 @@ export default class Game {
 			this.boardGap,
 			((this.height - this.paddleHeight) / 2),
 			KEYS.w,
-			KEYS.s
+			KEYS.s,
+			'player1'
 		);
 
 		// instantiate player2
@@ -39,7 +40,8 @@ export default class Game {
 			(this.width - this.boardGap - this.paddleWidth),
 			((this.height - this.paddleHeight) / 2),
 			KEYS.up,
-			KEYS.down
+			KEYS.down,
+			'player2'
 		);
 
 		// instantiate ball
@@ -65,8 +67,30 @@ export default class Game {
 			return;
 		}
 
+		if ((this.player1.score || this.player2.score) === 5 ){
+			this.gameElement.innerHTML = '';
+			document.querySelector('h1').innerHTML = `GAME OVER`;
+			if (this.player1.score > this.player2.score) {
+				document.getElementById('game').innerHTML = `<p>Player 1 wins! <br /> Press space to begin a new game.</p>`;
+			} else {
+				document.getElementById('game').innerHTML = `<p>Player 2 wins! <br /> Press space to begin a new game.</p>`;
+			}
+			document.addEventListener("keydown", event => {
+				if (event.key === KEYS.spaceBar) {
+					this.player1.score = 0;
+					this.player2.score = 0;
+					this.render();
+				}
+			});
+			return;
+		}
+		
 		// clear out existing elements
 		this.gameElement.innerHTML = '';
+
+		// repaint heading after game-over changes it
+		document.querySelector('h1').innerHTML = `PONG`;
+
 		// create new elements
 		let svg = document.createElementNS(SVG_NS, 'svg');
 		svg.setAttributeNS(null, 'width', this.width);

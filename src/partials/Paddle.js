@@ -1,7 +1,7 @@
 import { SVG_NS, CONFIG } from '../settings';
 
 export default class Paddle {
-  constructor(boardHeight, width, height, x, y, up, down) {
+  constructor(boardHeight, width, height, x, y, up, down, player) {
     this.boardHeight = boardHeight;
     this.width = width;
     this.height = height;
@@ -9,17 +9,28 @@ export default class Paddle {
     this.y = y;
     this.speed = CONFIG.speed;
     this.score = CONFIG.score;
+
+    this.player = player;
+    this.keyState = {};
    
-    document.addEventListener("keydown", event => {
-      switch (event.key) {
-        case up:
-          this.moveUp();
-          break;
-        case down:
-          this.moveDown();
-          break;
-      }
-    });
+    // document.addEventListener("keydown", event => {
+    //   switch (event.key) {
+    //     case up:
+    //       this.moveUp();
+    //       break;
+    //     case down:
+    //       this.moveDown();
+    //       break;
+    //   }
+    // });
+
+    document.addEventListener('keydown', event => {
+      this.keyState[event.key || event.which] = true;
+    }, true);
+
+    document.addEventListener('keyup', event => {
+      this.keyState[event.key || event.which] = false;
+    }, true);
   }
 
   render(svg) { 
@@ -34,6 +45,20 @@ export default class Paddle {
 
     // add paddle to game
     svg.appendChild(paddle);
+
+    // Player movement
+    if (this.keyState['w'] && this.player === 'player1') {
+      this.moveUp();
+    }
+    if (this.keyState['s'] && this.player === 'player1') {
+      this.moveDown();
+    }
+    if (this.keyState['ArrowUp'] && this.player === 'player2') {
+      this.moveUp();
+    }
+    if (this.keyState['ArrowDown'] && this.player === 'player2') {
+      this.moveDown();
+    }
   }
 
   moveUp() {
