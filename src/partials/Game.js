@@ -77,7 +77,7 @@ export default class Game {
 		this.player2.render(svg);
 
 		// render the ball
-		this.ball.render(svg);
+		this.ball.render(svg, this.player1, this.player2);
 	}
 
 }
