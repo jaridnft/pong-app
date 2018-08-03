@@ -13,5 +13,6 @@ export const CONFIG = {
     speed: 6,
     score: 0,
     direction: 1,
+    maxScore: 5,
     ballRadius: 8
 }
