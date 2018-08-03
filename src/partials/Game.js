@@ -90,6 +90,7 @@ export default class Game {
 
 		// repaint heading after game-over changes it
 		document.querySelector('h1').innerHTML = `PONG`;
+		document.getElementById('game').innerHTML = `<p>Press space to pause.</p>`;
 
 		// create new elements
 		let svg = document.createElementNS(SVG_NS, 'svg');
