@@ -21,6 +21,11 @@ export default class Ball {
     this.vx = this.direction * (6 - Math.abs(this.vy)); // since 6 > 5, x value will always be positive
   }
 
+  goal (player) {
+    player.score++;
+    this.reset();
+  }
+
   wallCollision() {
     const hitLeft = this.x - this.radius <= 0;
     const hitRight = this.x + this.radius >= this.boardWidth;
@@ -69,6 +74,16 @@ export default class Ball {
 
     this.wallCollision();
     this.paddleCollision(player1, player2);
+
+    const rightGoal = this.x + this.radius >= this.boardWidth;
+    const leftGoal = this.x - this.radius <= 0;
+    if (rightGoal) {
+      this.goal(player1);
+      this.direction = -1;
+    } else if (leftGoal) {
+      this.goal(player2);
+      this.direction = 1;
+    }
 
     // draw ball
     let ball = document.createElementNS( SVG_NS, 'circle');
