@@ -4,7 +4,7 @@ export const KEYS = {
   s: 's',        // player 1 down key
   up: 'ArrowUp',       // player 2 up key
   down: 'ArrowDown',     // player 2 down key
-  spaceBar: 'Space', // we'll use this later...
+  spaceBar: ' ', // we'll use this later...
 }
 export const CONFIG = {
     paddleWidth: 8,

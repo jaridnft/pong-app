@@ -1,6 +1,6 @@
 import { SVG_NS, KEYS, CONFIG } from '../settings';
-import Board from './Board'; //added to instantiate board class
-import Paddle from './Paddle';
+import Board from './Board'; // to instantiate classes
+import Paddle from './Paddle'; 
 import Ball from './Ball';
 
 export default class Game {
@@ -47,9 +47,19 @@ export default class Game {
 			this.width,
 			this.height
 		);
-	}
+
+		document.addEventListener("keydown", event => {
+      if (event.key === KEYS.spaceBar) {
+				this.pause = !this.pause;
+			}
+    });
+	} // end of constructor
 
 	render() {
+		if (this.pause) {
+			return;
+		}
+
 		// clear out existing elements
 		this.gameElement.innerHTML = '';
 		// create new elements

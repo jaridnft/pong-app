@@ -36,11 +36,11 @@ export default class Paddle {
     svg.appendChild(paddle);
   }
 
-  moveUp(){
-    this.y = Math.max(this.y - this.speed, 2);
+  moveUp() {
+    this.y = Math.max(this.y - this.speed, this.width);
   }
 
-  moveDown(){
-    this.y = Math.min(this.y + this.speed, this.boardHeight - this.height - 2);
+  moveDown() {
+    this.y = Math.min(this.y + this.speed, this.boardHeight - this.height - this.width);
   }
 }
