@@ -67,7 +67,7 @@ export default class Game {
 			return;
 		}
 
-		if ((this.player1.score || this.player2.score) === 5 ){
+		if (this.player1.score === 5 || this.player2.score === 5 ){
 			this.gameElement.innerHTML = '';
 			document.querySelector('h1').innerHTML = `GAME OVER`;
 			if (this.player1.score > this.player2.score) {
