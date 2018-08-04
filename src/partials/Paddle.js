@@ -14,7 +14,7 @@ export default class Paddle {
     this.player = player;
     this.keyState = {};
     
-    this.pastSpeed = this.currentSpeed; // used to compute instantaneous velocity, initial value then is 0
+    this.pastPos = y; // used to compute instantaneous velocity
 
     document.addEventListener('keydown', event => {
       this.keyState[event.key || event.which] = true;
@@ -26,7 +26,14 @@ export default class Paddle {
   }
 
   render(svg) { 
+    this.pastPos = this.y; // get last speed value before changing it
+
     this.moveDetect();
+
+    // measure how far we've travelled between frames
+    // positive for moving upwards, and negative for downwards
+    // speedDelta is a float from +- [6.5, 18] 
+    this.speedDelta = this.pastPos - this.y; // TODO: need to export this
 
     // draw paddle
     let paddle = document.createElementNS( SVG_NS, 'rect');

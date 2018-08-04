@@ -1,26 +1,66 @@
-import { SVG_NS, CONFIG } from '../settings';
+import { SVG_NS } from '../settings';
 
 export default class Ball {
   constructor(radius, boardWidth, boardHeight) {
     this.radius = radius;
     this.boardWidth = boardWidth;
     this.boardHeight = boardHeight;
-    this.direction = CONFIG.direction;
+    this.plusOrMinus = 1;
+    this.rightGoal = false;
+    this.leftGoal = false;
+    
     // set initial position of ball
     this.reset();
-
+    
     this.ping = new Audio('public/sounds/pong-01.wav');
+  }
+  
+  render(svg, player1, player2) { 
+    this.x += this.vx;
+    this.y += this.vy;
+
+    this.wallCollision();
+    this.paddleCollision(player1, player2);
+
+    this.rightGoal = this.x + this.radius >= this.boardWidth;
+    this.leftGoal = this.x - this.radius <= 0;
+
+    if (this.rightGoal) {
+      this.goal(player1);
+    } else if (this.leftGoal) {
+      this.goal(player2);
+    }
+
+    // draw ball
+    let ball = document.createElementNS( SVG_NS, 'circle');
+    ball.setAttributeNS(null, 'r', this.radius);
+    ball.setAttributeNS(null, 'cx', this.x); // controls ball movement
+    ball.setAttributeNS(null, 'cy', this.y); // controls ball movement
+    ball.setAttributeNS(null, 'stroke', 'white');
+    ball.setAttributeNS(null, 'fill', 'white');
+    ball.setAttributeNS(null, 'id', 'ball');
+
+    // add ball to game
+    svg.appendChild(ball);
   }
 
   reset() {
+    if (this.rightGoal) {
+      this.plusOrMinus = 1; // sends ball to opposite side after goal
+    } else if (this.leftGoal) {
+      this.plusOrMinus = -1;
+    } else {
+      this.plusOrMinus = Math.random() < 0.51 ? -1 : 1; // will be -1 or 1 to start
+    }
+
     this.x = this.boardWidth / 2;
     this.y = this.boardHeight / 2;
 
-    this.vy = 0; // solves corner case for when vy is randomly assigned 0
+    this.vy = 0; // this solves corner case for when vy is randomly assigned 0
     while (this.vy === 0) {
       this.vy = (Math.floor(Math.random() * 5)); // Math.random() returns number [0,1]
     }
-    this.vx = this.direction * (5.5 - Math.abs(this.vy)); // since 5.5 > 5, x value will always be positive
+    this.vx = this.plusOrMinus * (5.5 - Math.abs(this.vy)); // since 5.5 > 5, x value will always be positive
   }
 
   goal (player) {
@@ -69,34 +109,4 @@ export default class Ball {
       }
     }
   } 
-
-  render(svg, player1, player2) { 
-    this.x += this.vx;
-    this.y += this.vy;
-
-    this.wallCollision();
-    this.paddleCollision(player1, player2);
-
-    const rightGoal = this.x + this.radius >= this.boardWidth;
-    const leftGoal = this.x - this.radius <= 0;
-    if (rightGoal) {
-      this.goal(player1);
-      this.direction = -1;
-    } else if (leftGoal) {
-      this.goal(player2);
-      this.direction = 1;
-    }
-
-    // draw ball
-    let ball = document.createElementNS( SVG_NS, 'circle');
-    ball.setAttributeNS(null, 'r', this.radius);
-    ball.setAttributeNS(null, 'cx', this.x); // controls ball movement
-    ball.setAttributeNS(null, 'cy', this.y); // controls ball movement
-    ball.setAttributeNS(null, 'stroke', 'white');
-    ball.setAttributeNS(null, 'fill', 'white');
-    ball.setAttributeNS(null, 'id', 'ball');
-
-    // add ball to game
-    svg.appendChild(ball);
-  }
 }
