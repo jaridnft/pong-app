@@ -14,8 +14,7 @@ export const CONFIG = {
     boardGap: 10,
     paddleVel: 6,
     paddleAccel: 0.5,
-    currentScore: 0,
     direction: 1,
-    maxScore: 1,
+    maxScore: 10,
     ballRadius: 8
 }

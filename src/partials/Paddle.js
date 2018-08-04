@@ -8,23 +8,13 @@ export default class Paddle {
     this.x = x;
     this.y = y;
     this.currentSpeed = CONFIG.paddleVel;
-    this.score = CONFIG.currentScore;
+    this.score = 0;
     this.accel = CONFIG.paddleAccel;
 
     this.player = player;
     this.keyState = {};
+    
     this.pastSpeed = this.currentSpeed; // used to compute instantaneous velocity, initial value then is 0
-   
-    // document.addEventListener("keydown", event => {
-    //   switch (event.key) {
-    //     case up:
-    //       this.moveUp();
-    //       break;
-    //     case down:
-    //       this.moveDown();
-    //       break;
-    //   }
-    // });
 
     document.addEventListener('keydown', event => {
       this.keyState[event.key || event.which] = true;
@@ -36,6 +26,8 @@ export default class Paddle {
   }
 
   render(svg) { 
+    this.moveDetect();
+
     // draw paddle
     let paddle = document.createElementNS( SVG_NS, 'rect');
     paddle.setAttributeNS(null, 'x', this.x);
@@ -45,7 +37,11 @@ export default class Paddle {
     paddle.setAttributeNS(null, 'stroke', 'white');
     paddle.setAttributeNS(null, 'fill', 'white');
     
-    // Player movement
+    // add paddle to game
+    svg.appendChild(paddle);
+  }
+
+  moveDetect() {
     if (this.keyState['w'] && this.player === 'player1') {
       this.moveUp();
     }
@@ -68,13 +64,9 @@ export default class Paddle {
     (this.keyState['ArrowUp'] == this.keyState['ArrowDown'])) {
       this.currentSpeed = CONFIG.paddleVel;
     }
-
-    // add paddle to game
-    svg.appendChild(paddle);
   }
 
   moveUp() {
-
     this.currentSpeed += this.accel;
     this.y = Math.max(this.y - this.currentSpeed, this.width);
   }

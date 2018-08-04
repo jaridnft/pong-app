@@ -16,6 +16,6 @@ export default class Score {
     scoreText.setAttributeNS(null, 'y', this.y);
 
     svg.appendChild(scoreText);
-    scoreText.textContent = score
+    scoreText.textContent = score;
   }
 }

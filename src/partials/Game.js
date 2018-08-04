@@ -69,12 +69,13 @@ export default class Game {
 			return;
 		}
 		
-		if ((this.player1.score === CONFIG.maxScore) || (this.player2.score === CONFIG.maxScore)){
+		if ((this.player1.score === CONFIG.maxScore) || (this.player2.score === CONFIG.maxScore)) {
 			this.gameEnd();
-			return;
+			return; 
 		}
 
 		// removes a bug that would start a new game immediately upon hitting maxScore
+		// this has to be outside gameEnd() as the event listener is omnipresent
 		this.newGame = false;
 		
 		// clear out existing elements
