@@ -58,61 +58,66 @@ export default class Game {
 		document.addEventListener("keydown", event => {
       if (event.key === KEYS.spaceBar) {
 				this.pause = !this.pause;
+			} else if ((event.key === KEYS.n) || (event.key === KEYS.N)) {
+				this.newGame = true;
 			}
     });
 	} // end of constructor
-
+	
 	render() {
 		if (this.pause) {
 			return;
 		}
-
-		// game end condition
+		
 		if ((this.player1.score === CONFIG.maxScore) || (this.player2.score === CONFIG.maxScore)){
-			this.gameElement.innerHTML = '';
-			document.querySelector('h1').innerHTML = `GAME OVER`;
-			if (this.player1.score > this.player2.score) {
-				document.getElementById('game').innerHTML = `<p>Player 1 wins! <br /> Press space to begin a new game.</p>`;
-			} else {
-				document.getElementById('game').innerHTML = `<p>Player 2 wins! <br /> Press space to begin a new game.</p>`;
-			}
-			document.addEventListener("keydown", event => {
-				if (event.key === KEYS.spaceBar) {
-					this.player1.score = 0;
-					this.player2.score = 0;
-					this.render();
-				}
-			});
+			this.gameEnd();
 			return;
 		}
+
+		// removes a bug that would start a new game immediately upon hitting maxScore
+		this.newGame = false;
 		
 		// clear out existing elements
 		this.gameElement.innerHTML = '';
-
+		
 		// repaint heading after game-over changes it
 		document.querySelector('h1').innerHTML = `PONG`;
-
+		
 		// create new elements
 		let svg = document.createElementNS(SVG_NS, 'svg');
 		svg.setAttributeNS(null, 'width', this.width);
 		svg.setAttributeNS(null, 'height', this.height);
 		svg.setAttributeNS(null, 'viewBox', `0 0 ${this.width} ${this.height}`);
 		this.gameElement.appendChild(svg);
-
+		
 		// render the board
 		this.board.render(svg);
-
+		
 		// render the paddles
 		this.player1.render(svg);
 		this.player2.render(svg);
-
+		
 		// render the ball
 		this.ball.render(svg, this.player1, this.player2);
-
+		
 		// render the score
 		this.score1.render(svg, this.player1.score);
-		this.score2.render(svg, this.player2.score);
-
+		this.score2.render(svg, this.player2.score);	
 	}
 
+// game end DOM change
+	gameEnd() {
+		if (this.newGame) {
+			this.player1.score = 0;
+			this.player2.score = 0;
+		}
+		this.gameElement.innerHTML = '';
+		document.querySelector('h1').innerHTML = `GAME OVER`;
+		if (this.player1.score > this.player2.score) {
+			document.getElementById('game').innerHTML = `<p>Player 1 wins! <br /> Press 'n' to begin a new game.</p>`;
+		} else {
+			document.getElementById('game').innerHTML = `<p>Player 2 wins! <br /> Press 'n' to begin a new game.</p>`;
+		}
+	}
+	
 }

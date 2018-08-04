@@ -18,9 +18,9 @@ export default class Ball {
 
     this.vy = 0; // solves corner case for when vy is randomly assigned 0
     while (this.vy === 0) {
-      this.vy = Math.floor(Math.random() * 10 - 5); // Math.random() returns number [0,1]
+      this.vy = (Math.floor(Math.random() * 5)); // Math.random() returns number [0,1]
     }
-    this.vx = this.direction * (6 - Math.abs(this.vy)); // since 6 > 5, x value will always be positive
+    this.vx = this.direction * (5.5 - Math.abs(this.vy)); // since 5.5 > 5, x value will always be positive
   }
 
   goal (player) {

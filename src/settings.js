@@ -4,16 +4,18 @@ export const KEYS = {
   s: 's',        // player 1 down key
   up: 'ArrowUp',       // player 2 up key
   down: 'ArrowDown',     // player 2 down key
-  spaceBar: ' ' // pause OR new game
+  spaceBar: ' ', // pause 
+  n: 'n', // new game
+  N: 'N' // new game
 }
 export const CONFIG = {
     paddleWidth: 8,
 		paddleHeight: 56,
     boardGap: 10,
     paddleVel: 6,
-    paddleAccel: .4,
+    paddleAccel: 0.5,
     currentScore: 0,
     direction: 1,
-    maxScore: 10,
+    maxScore: 1,
     ballRadius: 8
 }
