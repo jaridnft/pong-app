@@ -7,8 +7,9 @@ export default class Paddle {
     this.height = height;
     this.x = x;
     this.y = y;
-    this.speed = CONFIG.speed;
-    this.score = CONFIG.score;
+    this.speed = CONFIG.paddleVel;
+    this.score = CONFIG.currentScore;
+    this.accel = CONFIG.paddleAccel;
 
     this.player = player;
     this.keyState = {};
@@ -59,17 +60,29 @@ export default class Paddle {
     if (this.keyState['ArrowDown'] && this.player === 'player2') {
       this.moveDown();
     }
+
+    // paddle velocity resets, ie. remove accumulated acceleration
+    if ((this.player === 'player1') &&
+        (!this.keyState['w'] && !this.keyState['s'])) {
+      this.speed = CONFIG.speed;
+    }
+    // if ((this.player === 'player2') &&
+    //     (!this.keyState['ArrowUp'] && !this.keyState['ArrowDown'])) {
+    //   this.speed = CONFIG.speed;
+    // }
   }
 
   moveUp() {
+    this.speed += this.accel;
     this.y = Math.max(this.y - this.speed, this.width);
   }
 
   moveDown() {
+    this.speed += this.accel;
     this.y = Math.min(this.y + this.speed, this.boardHeight - this.height - this.width);
   }
 
-  coordinates(x, y, width, height) {
+  coordinates(x, y, width, height) { // used for mapping collisions with ball
     let leftX = x;
     let rightX = x + width;
     let topY = y;

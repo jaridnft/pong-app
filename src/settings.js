@@ -10,9 +10,10 @@ export const CONFIG = {
     paddleWidth: 8,
 		paddleHeight: 56,
     boardGap: 10,
-    speed: 6,
-    score: 0,
+    paddleVel: 6,
+    paddleAccel: .4,
+    currentScore: 0,
     direction: 1,
-    maxScore: 5,
+    maxScore: 10,
     ballRadius: 8
 }

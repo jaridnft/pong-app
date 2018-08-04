@@ -67,6 +67,7 @@ export default class Game {
 			return;
 		}
 
+		// game end condition
 		if ((this.player1.score === CONFIG.maxScore) || (this.player2.score === CONFIG.maxScore)){
 			this.gameElement.innerHTML = '';
 			document.querySelector('h1').innerHTML = `GAME OVER`;
