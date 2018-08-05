@@ -16,5 +16,5 @@ export const CONFIG = {
     paddleAccel: 0.5,
     maxScore: 10,
     ballRadius: 8,
-    spinConst: 0.2
+    spinConst: 0.05
 }

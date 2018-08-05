@@ -19,6 +19,14 @@ export default class Ball {
     this.wallCollision();
     this.paddleCollision(player1, player2);
 
+    if (this.rightPaddleCollided) { //TODO this bools are being cleared too early
+      this.backspin(player2);
+    } else if (this.leftPaddleCollided){
+      this.backspin(player1);
+    }
+
+    this.hotOffThePaddle = false;
+
     this.rightGoal = this.x + this.radius >= this.boardWidth;
     this.leftGoal = this.x - this.radius <= 0;
 
@@ -50,6 +58,9 @@ export default class Ball {
       this.plusOrMinus = Math.random() < 0.51 ? -1 : 1; // will be -1 or 1 to start
     }
 
+    this.rightPaddleCollided = false;
+    this.leftPaddleCollided = false;
+
     this.x = this.boardWidth / 2;
     this.y = this.boardHeight / 2;
 
@@ -66,6 +77,8 @@ export default class Ball {
   }
 
   wallCollision() {
+    this.rightPaddleCollided = false;
+    this.leftPaddleCollided = false;
     const hitLeft = this.x - this.radius <= 0;
     const hitRight = this.x + this.radius >= this.boardWidth;
     const hitTop = this.y - this.radius <= 0;
@@ -88,29 +101,51 @@ export default class Ball {
           (this.y >= topY && this.y <= bottomY)) {
         this.vx = -this.vx;
         this.ping.play();
+        this.rightPaddleCollided = true;
+        this.leftPaddleCollided = false;
+        this.hotOffThePaddle = true;
       } else {
         this.vx = this.vx;
       }
 
-      // TODO: backspin code
-      this.ballSpinConstant = CONFIG.spinConst * player2.speedDelta;
-      // this.vx += this.ballSpinConstant;
-      // this.vy += this.ballSpinConstant;
-      // ballSpinConstant needs to decrease to 0
-
+      
     } else {
       let paddle = player1.coordinates(player1.x, player1.y, player1.width, player1.height); // returns an array with coordinates for paddle in space
       let [leftX, rightX, topY, bottomY] = paddle;
-
+      
       if ((this.x - this.radius <= rightX) && 
       (this.x - this.radius >= leftX) &&
       (this.y >= topY && this.y <= bottomY)) {
         this.vx = -this.vx;       
         this.ping.play();
+        this.leftPaddleCollided = true;
+        this.rightPaddleCollided = false;
+        this.hotOffThePaddle = true;
       } else {
         this.vx = this.vx;
       }
-
+      
     }
   }
+
+  backspin(player) {
+    if (this.hotOffThePaddle) { 
+      this.ballSpinConstant = CONFIG.spinConst * player.speedDelta;
+      this.hotOffThePaddle = !this.hotOffThePaddle;
+    }
+
+    
+    let pastVx = this.vx;
+    this.vx += this.vy * this.ballSpinConstant;
+    this.vy += (-pastVx * this.ballSpinConstant);
+    
+    console.log(`speedDelta: ${player.speedDelta}, ballSpinConstant: ${this.ballSpinConstant}`);
+    console.log(`vy: ${this.vy}, vx: ${this.vx}`);
+
+    this.ballSpinConstant -= 0.0025;
+    this.ballSpinConstant = Math.min(0, this.ballSpinConstant);
+    // ballSpinConstant needs to decrease to 0
+  }
 }
+
+// TODO reset velocities on collisions
