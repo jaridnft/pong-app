@@ -27,8 +27,8 @@ export default class Game {
 			this.paddleHeight,
 			this.boardGap,
 			((this.height - this.paddleHeight) / 2),
-			KEYS.w,
-			KEYS.s,
+			KEYS.upOne,
+			KEYS.downOne,
 			'player1'
 		);
 
@@ -39,8 +39,8 @@ export default class Game {
 			this.paddleHeight,
 			(this.width - this.boardGap - this.paddleWidth),
 			((this.height - this.paddleHeight) / 2),
-			KEYS.up,
-			KEYS.down,
+			KEYS.upTwo,
+			KEYS.downTwo,
 			'player2'
 		);
 

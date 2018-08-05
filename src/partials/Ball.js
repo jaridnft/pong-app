@@ -5,9 +5,6 @@ export default class Ball {
     this.radius = radius;
     this.boardWidth = boardWidth;
     this.boardHeight = boardHeight;
-    this.plusOrMinus = 1;
-    this.rightGoal = false;
-    this.leftGoal = false;
     
     // set initial position of ball
     this.reset();

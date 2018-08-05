@@ -7,14 +7,14 @@ export default class Paddle {
     this.height = height;
     this.x = x;
     this.y = y;
+    this.up = up;
+    this.down = down;
     this.currentSpeed = CONFIG.paddleVel;
     this.score = 0;
     this.accel = CONFIG.paddleAccel;
 
     this.player = player;
     this.keyState = {};
-    
-    this.pastPos = y; // used to compute instantaneous velocity
 
     document.addEventListener('keydown', event => {
       this.keyState[event.key || event.which] = true;
@@ -26,7 +26,7 @@ export default class Paddle {
   }
 
   render(svg) { 
-    this.pastPos = this.y; // get last speed value before changing it
+    this.pastPos = this.y; // get last speed value before changing it, used to compute instantaneous velocity
 
     this.moveDetect();
 
@@ -49,38 +49,19 @@ export default class Paddle {
   }
 
   moveDetect() {
-    if (this.keyState['w'] && this.player === 'player1') {
-      this.moveUp();
+    if (this.keyState[this.up]) { // move up
+      this.currentSpeed += this.accel;
+      this.y = Math.max(this.y - this.currentSpeed, this.width);
     }
-    if (this.keyState['s'] && this.player === 'player1') {
-      this.moveDown();
-    }
-    if (this.keyState['ArrowUp'] && this.player === 'player2') {
-      this.moveUp();
-    }
-    if (this.keyState['ArrowDown'] && this.player === 'player2') {
-      this.moveDown();
+    if (this.keyState[this.down]) {
+      this.currentSpeed += this.accel; //  down
+      this.y = Math.min(this.y + this.currentSpeed, this.boardHeight - this.height - this.width);
     }
     
-    // paddle velocity resets, ie. remove accumulated acceleration
-    if ((this.player === 'player1') && 
-    (this.keyState['w'] == this.keyState['s'])) {   // this line is XNOR, ie. reset accel when both keys, or neither key is pressed
+    // paddle velocity reset, ie. remove accumulated acceleration
+    if (this.keyState[this.up] == this.keyState[this.down]) {   // this line is XNOR, ie. reset accel when both/neither key is pressed
       this.currentSpeed = CONFIG.paddleVel;
     }
-    if ((this.player === 'player2') &&
-    (this.keyState['ArrowUp'] == this.keyState['ArrowDown'])) {
-      this.currentSpeed = CONFIG.paddleVel;
-    }
-  }
-
-  moveUp() {
-    this.currentSpeed += this.accel;
-    this.y = Math.max(this.y - this.currentSpeed, this.width);
-  }
-
-  moveDown() {
-    this.currentSpeed += this.accel;
-    this.y = Math.min(this.y + this.currentSpeed, this.boardHeight - this.height - this.width);
   }
 
   coordinates(x, y, width, height) { // used for mapping collisions with ball
