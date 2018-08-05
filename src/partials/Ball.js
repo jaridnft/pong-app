@@ -145,15 +145,17 @@ export default class Ball {
 
     // ballSpinConstant needs to go to 0
     if (this.ballSpinConstant > 0) {
-      this.ballSpinConstant -= 0.000001;
+      this.ballSpinConstant -= 0.0000005;
       this.ballSpinConstant = Math.max(0, this.ballSpinConstant);
     } else {
-      this.ballSpinConstant += 0.000001;
+      this.ballSpinConstant += 0.0000005;
       this.ballSpinConstant = Math.min(0, this.ballSpinConstant);
     }
   }
 }
 
-// TODO reset velocities on collisions
-// TODO play with constants to get pretty curves
+// TODO reset velocities on collisions, how will I make it look realistic to backspin?
+// TODO play with constants to get pretty curves.. pretty close
+// TODO ball arcs wrong direction when hitting left paddle
+// TODO ball arcs incorrectly when moving right paddle up
 // TODO condition if vx = 0
