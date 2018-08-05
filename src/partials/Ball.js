@@ -1,4 +1,4 @@
-import { SVG_NS } from '../settings';
+import { SVG_NS, CONFIG } from '../settings';
 
 export default class Ball {
   constructor(radius, boardWidth, boardHeight) {
@@ -92,6 +92,12 @@ export default class Ball {
         this.vx = this.vx;
       }
 
+      // TODO: backspin code
+      this.ballSpinConstant = CONFIG.spinConst * player2.speedDelta;
+      this.vx += this.ballSpinConstant;
+      this.vy += this.ballSpinConstant;
+      // ballSpinConstant needs to decrease to 0
+
     } else {
       let paddle = player1.coordinates(player1.x, player1.y, player1.width, player1.height); // returns an array with coordinates for paddle in space
       let [leftX, rightX, topY, bottomY] = paddle;
@@ -104,6 +110,7 @@ export default class Ball {
       } else {
         this.vx = this.vx;
       }
+
     }
-  } 
+  }
 }

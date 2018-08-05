@@ -11,7 +11,6 @@ export default class Paddle {
     this.down = down;
     this.currentSpeed = CONFIG.paddleVel;
     this.score = 0;
-    this.accel = CONFIG.paddleAccel;
 
     this.player = player;
     this.keyState = {};
@@ -30,11 +29,6 @@ export default class Paddle {
 
     this.moveDetect();
 
-    // measure how far we've travelled between frames
-    // positive for moving upwards, and negative for downwards
-    // speedDelta is a float from +- [6.5, 18] 
-    this.speedDelta = this.pastPos - this.y; // TODO: need to export this
-
     // draw paddle
     let paddle = document.createElementNS( SVG_NS, 'rect');
     paddle.setAttributeNS(null, 'x', this.x);
@@ -50,11 +44,11 @@ export default class Paddle {
 
   moveDetect() {
     if (this.keyState[this.up]) { // move up
-      this.currentSpeed += this.accel;
+      this.currentSpeed += CONFIG.paddleAccel;
       this.y = Math.max(this.y - this.currentSpeed, this.width);
     }
     if (this.keyState[this.down]) {
-      this.currentSpeed += this.accel; //  down
+      this.currentSpeed += CONFIG.paddleAccel; //  down
       this.y = Math.min(this.y + this.currentSpeed, this.boardHeight - this.height - this.width);
     }
     
@@ -62,6 +56,11 @@ export default class Paddle {
     if (this.keyState[this.up] == this.keyState[this.down]) {   // this line is XNOR, ie. reset accel when both/neither key is pressed
       this.currentSpeed = CONFIG.paddleVel;
     }
+
+    // measure how far we've travelled between frames
+    // positive for moving upwards, and negative for downwards
+    // speedDelta is a float from +- [6.5, 18] 
+    this.speedDelta = this.pastPos - this.y;
   }
 
   coordinates(x, y, width, height) { // used for mapping collisions with ball
