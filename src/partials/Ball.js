@@ -19,7 +19,7 @@ export default class Ball {
     this.wallCollision();
     this.paddleCollision(player1, player2);
 
-    if (this.rightPaddleCollided) { //TODO this bools are being cleared too early
+    if (this.rightPaddleCollided) { //TODO these bools are being cleared too early
       this.backspin(player2);
     } else if (this.leftPaddleCollided){
       this.backspin(player1);
@@ -77,17 +77,19 @@ export default class Ball {
   }
 
   wallCollision() {
-    this.rightPaddleCollided = false;
-    this.leftPaddleCollided = false;
     const hitLeft = this.x - this.radius <= 0;
     const hitRight = this.x + this.radius >= this.boardWidth;
     const hitTop = this.y - this.radius <= 0;
     const hitBottom = this.y + this.radius >= this.boardHeight;
     if (hitLeft || hitRight) {
       this.vx = -this.vx;
+      this.rightPaddleCollided = false;
+      this.leftPaddleCollided = false;
     }
     else if (hitTop || hitBottom) {
       this.vy = -this.vy;
+      this.rightPaddleCollided = false;
+      this.leftPaddleCollided = false;
     }
   }
 
@@ -134,7 +136,6 @@ export default class Ball {
       this.hotOffThePaddle = !this.hotOffThePaddle;
     }
 
-    
     let pastVx = this.vx;
     this.vx += this.vy * this.ballSpinConstant;
     this.vy += (-pastVx * this.ballSpinConstant);
@@ -142,10 +143,17 @@ export default class Ball {
     console.log(`speedDelta: ${player.speedDelta}, ballSpinConstant: ${this.ballSpinConstant}`);
     console.log(`vy: ${this.vy}, vx: ${this.vx}`);
 
-    this.ballSpinConstant -= 0.0025;
-    this.ballSpinConstant = Math.min(0, this.ballSpinConstant);
-    // ballSpinConstant needs to decrease to 0
+    // ballSpinConstant needs to go to 0
+    if (this.ballSpinConstant > 0) {
+      this.ballSpinConstant -= 0.000001;
+      this.ballSpinConstant = Math.max(0, this.ballSpinConstant);
+    } else {
+      this.ballSpinConstant += 0.000001;
+      this.ballSpinConstant = Math.min(0, this.ballSpinConstant);
+    }
   }
 }
 
 // TODO reset velocities on collisions
+// TODO play with constants to get pretty curves
+// TODO condition if vx = 0
