@@ -94,8 +94,8 @@ export default class Ball {
 
       // TODO: backspin code
       this.ballSpinConstant = CONFIG.spinConst * player2.speedDelta;
-      this.vx += this.ballSpinConstant;
-      this.vy += this.ballSpinConstant;
+      // this.vx += this.ballSpinConstant;
+      // this.vy += this.ballSpinConstant;
       // ballSpinConstant needs to decrease to 0
 
     } else {

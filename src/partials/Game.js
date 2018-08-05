@@ -62,7 +62,9 @@ export default class Game {
 				this.newGame = true;
 			}
 		});
+
 		this.gameElement.insertAdjacentElement('beforebegin', document.createElement('h2'));
+
 	} // end of constructor
 	
 	render() {
@@ -85,7 +87,8 @@ export default class Game {
 		// repaint heading after game-over changes it
 		this.h1 = document.querySelector('h1');
 		this.h1.innerHTML = `PONG`;
-		document.querySelector('h2').innerHTML = `Press 'space' to pause the game.`;
+		this.h2 = document.querySelector('h2');
+		this.h2.innerHTML = `Press 'space' to pause the game.`;
 		
 		// create new elements
 		let svg = document.createElementNS(SVG_NS, 'svg');
@@ -117,7 +120,7 @@ export default class Game {
 			this.player2.score = 0;
 		}
 		this.h1.innerHTML = `GAME OVER`;
-		document.querySelector('h2').innerHTML = ``;
+		this.h2.innerHTML = ``;
 		if (this.player1.score > this.player2.score) {
 			this.gameElement.innerHTML = `<p>Player 1 wins! <br /> Press 'n' to begin a new game.</p>`;
 		} else {

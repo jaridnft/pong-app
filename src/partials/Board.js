@@ -1,4 +1,4 @@
-import { SVG_NS } from '../settings';
+import { SVG_NS, KEYS } from '../settings';
 
 export default class Board {
   constructor(width, height) {
@@ -25,19 +25,19 @@ export default class Board {
 
     let playerOneText = document.createElementNS( SVG_NS, 'text');
     playerOneText.setAttributeNS(null, 'font-family', 'Silkscreen Web');
-    playerOneText.setAttributeNS(null, 'font-size', 15);
+    playerOneText.setAttributeNS(null, 'font-size', 12);
     playerOneText.setAttributeNS(null, 'fill', 'white');
-    playerOneText.setAttributeNS(null, 'x', this.width / 2 - 110);
+    playerOneText.setAttributeNS(null, 'x', 90);
     playerOneText.setAttributeNS(null, 'y', this.height - 5);
-    playerOneText.textContent = 'player 1';
+    playerOneText.textContent = `player 1 - up: '${KEYS.upOne}', down: '${KEYS.downOne}'`;
 
     let playerTwoText = document.createElementNS( SVG_NS, 'text');
     playerTwoText.setAttributeNS(null, 'font-family', 'Silkscreen Web');
-    playerTwoText.setAttributeNS(null, 'font-size', 15);
+    playerTwoText.setAttributeNS(null, 'font-size', 12);
     playerTwoText.setAttributeNS(null, 'fill', 'white');
-    playerTwoText.setAttributeNS(null, 'x', this.width / 2 + 35);
+    playerTwoText.setAttributeNS(null, 'x', this.width / 2 + 30);
     playerTwoText.setAttributeNS(null, 'y', this.height - 5);
-    playerTwoText.textContent = 'player 2';
+    playerTwoText.textContent = `player 2 - up: '${KEYS.upTwo}', down: '${KEYS.downTwo}'`;
     
     // add shapes to game
     svg.appendChild(rect);
