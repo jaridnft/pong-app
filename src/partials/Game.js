@@ -61,7 +61,8 @@ export default class Game {
 			} else if ((event.key === KEYS.n) || (event.key === KEYS.N)) {
 				this.newGame = true;
 			}
-    });
+		});
+		this.gameElement.insertAdjacentElement('beforebegin', document.createElement('h2'));
 	} // end of constructor
 	
 	render() {
@@ -82,7 +83,9 @@ export default class Game {
 		this.gameElement.innerHTML = '';
 		
 		// repaint heading after game-over changes it
-		document.querySelector('h1').innerHTML = `PONG`;
+		this.h1 = document.querySelector('h1');
+		this.h1.innerHTML = `PONG`;
+		document.querySelector('h2').innerHTML = `Press 'space' to pause the game.`;
 		
 		// create new elements
 		let svg = document.createElementNS(SVG_NS, 'svg');
@@ -104,6 +107,7 @@ export default class Game {
 		// render the score
 		this.score1.render(svg, this.player1.score);
 		this.score2.render(svg, this.player2.score);	
+		
 	}
 
 // game end DOM change
@@ -112,12 +116,12 @@ export default class Game {
 			this.player1.score = 0;
 			this.player2.score = 0;
 		}
-		this.gameElement.innerHTML = '';
-		document.querySelector('h1').innerHTML = `GAME OVER`;
+		this.h1.innerHTML = `GAME OVER`;
+		document.querySelector('h2').innerHTML = ``;
 		if (this.player1.score > this.player2.score) {
-			document.getElementById('game').innerHTML = `<p>Player 1 wins! <br /> Press 'n' to begin a new game.</p>`;
+			this.gameElement.innerHTML = `<p>Player 1 wins! <br /> Press 'n' to begin a new game.</p>`;
 		} else {
-			document.getElementById('game').innerHTML = `<p>Player 2 wins! <br /> Press 'n' to begin a new game.</p>`;
+			this.gameElement.innerHTML = `<p>Player 2 wins! <br /> Press 'n' to begin a new game.</p>`;
 		}
 	}
 	

@@ -22,9 +22,27 @@ export default class Board {
     line.setAttributeNS(null, 'stroke', 'white');
     line.setAttributeNS(null, 'stroke-dasharray', '10, 7');
     line.setAttributeNS(null, 'stroke-width', '2');
+
+    let playerOneText = document.createElementNS( SVG_NS, 'text');
+    playerOneText.setAttributeNS(null, 'font-family', 'Silkscreen Web');
+    playerOneText.setAttributeNS(null, 'font-size', 15);
+    playerOneText.setAttributeNS(null, 'fill', 'white');
+    playerOneText.setAttributeNS(null, 'x', this.width / 2 - 110);
+    playerOneText.setAttributeNS(null, 'y', this.height - 5);
+    playerOneText.textContent = 'player 1';
+
+    let playerTwoText = document.createElementNS( SVG_NS, 'text');
+    playerTwoText.setAttributeNS(null, 'font-family', 'Silkscreen Web');
+    playerTwoText.setAttributeNS(null, 'font-size', 15);
+    playerTwoText.setAttributeNS(null, 'fill', 'white');
+    playerTwoText.setAttributeNS(null, 'x', this.width / 2 + 35);
+    playerTwoText.setAttributeNS(null, 'y', this.height - 5);
+    playerTwoText.textContent = 'player 2';
     
     // add shapes to game
     svg.appendChild(rect);
     svg.appendChild(line);
+    svg.appendChild(playerOneText);
+    svg.appendChild(playerTwoText);
   }
 }
