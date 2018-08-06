@@ -10,11 +10,12 @@ export const KEYS = {
 }
 export const CONFIG = {
     paddleWidth: 8,
-		paddleHeight: 56,
+		paddleHeight: 64,
     boardGap: 10,
     paddleVel: 6,
     paddleAccel: 0.5,
     maxScore: 10,
     ballRadius: 8,
-    spinConst: 0.0005
+    spinConst: 0.0035, // for best results keep between (0.002, 0.045)
+    spinDecay: 0.965 // must be between (0, 1)
 }

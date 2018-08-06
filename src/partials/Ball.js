@@ -66,9 +66,9 @@ export default class Ball {
 
     this.vy = 0; // this solves corner case for when vy is randomly assigned 0
     while (this.vy === 0) {
-      this.vy = (Math.floor(Math.random() * 5)); // Math.random() returns number [0,1]
+      this.vy = (Math.floor(Math.random() * 4.5)); // Math.random() returns number [0,1]
     }
-    this.vx = this.plusOrMinus * (5.5 - Math.abs(this.vy)); // since 5.5 > 5, x value will always be positive
+    this.vx = this.plusOrMinus * (6 - Math.abs(this.vy)); // since 6 > 5, x value will always be positive
   }
 
   goal (player) {
@@ -137,25 +137,26 @@ export default class Ball {
     }
 
     let pastVx = this.vx;
-    this.vx += this.vy * this.ballSpinConstant;
-    this.vy += (-pastVx * this.ballSpinConstant);
-    
-    console.log(`speedDelta: ${player.speedDelta}, ballSpinConstant: ${this.ballSpinConstant}`);
-    console.log(`vy: ${this.vy}, vx: ${this.vx}`);
 
-    // ballSpinConstant needs to go to 0
-    if (this.ballSpinConstant > 0) {
-      this.ballSpinConstant -= 0.0000005;
-      this.ballSpinConstant = Math.max(0, this.ballSpinConstant);
+    if (player.player === 'player2') {             // logic to reverse backspin direction depending on paddle side
+      this.vx += this.vy * this.ballSpinConstant;  // to create a 'spin' we have to apply a vector perpendicular to [vx, vy]
+      this.vy += (-pastVx * this.ballSpinConstant); // by definition, this vector is [vy, -vx]
     } else {
-      this.ballSpinConstant += 0.0000005;
-      this.ballSpinConstant = Math.min(0, this.ballSpinConstant);
+      this.vx -= this.vy * this.ballSpinConstant;
+      this.vy -= (-pastVx * this.ballSpinConstant);
     }
+    
+    // ballSpinConstant needs to go to 0, or else you can create a perfect circle instead of arc
+    this.ballSpinConstant *= CONFIG.spinDecay;
+
+    if (this.ballSpinConstant !== 0) {
+      console.log(`speedDelta: ${player.speedDelta}, ballSpinConstant: ${this.ballSpinConstant}`);
+      console.log(`vy: ${this.vy}, vx: ${this.vx}`);
+    }
+
   }
 }
 
 // TODO reset velocities on collisions, how will I make it look realistic to backspin?
 // TODO play with constants to get pretty curves.. pretty close
-// TODO ball arcs wrong direction when hitting left paddle
-// TODO ball arcs incorrectly when moving right paddle up
 // TODO condition if vx = 0
