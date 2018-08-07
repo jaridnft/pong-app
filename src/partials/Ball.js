@@ -10,7 +10,6 @@ export default class Ball {
     this.reset();
     
     this.ping = new Audio('public/sounds/pong-01.wav');
-
   }
   
   render(svg, player1, player2) { 
@@ -92,7 +91,7 @@ export default class Ball {
     this.hitBottom = this.y + this.radius >= this.boardHeight;
   }
   
-  paddleCollision(player1, player2){
+  paddleCollision(player1, player2) {
     if (this.vx > 0) {
       let paddle = player2.coordinates(player2.x, player2.y, player2.width, player2.height); // returns an array with coordinates for paddle in space
       let [leftX, rightX, topY, bottomY] = paddle;
@@ -116,7 +115,6 @@ export default class Ball {
         this.vx = this.vx;
       }
 
-      
     } else {
       let paddle = player1.coordinates(player1.x, player1.y, player1.width, player1.height); // returns an array with coordinates for paddle in space
       let [leftX, rightX, topY, bottomY] = paddle;
@@ -137,8 +135,7 @@ export default class Ball {
         this.hotOffThePaddle = true;
       } else {
         this.vx = this.vx;
-      }
-      
+      }   
     }
   }
 

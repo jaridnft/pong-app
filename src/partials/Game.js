@@ -88,7 +88,7 @@ export default class Game {
 		this.h1 = document.querySelector('h1');
 		this.h1.innerHTML = `BACKSPIN PONG`;
 		this.h2 = document.querySelector('h2');
-		this.h2.innerHTML = `Press 'space' to pause the game.`;
+		this.h2.innerHTML = `Press 'space' to pause the game, first player to 10 wins!`;
 		
 		// create new elements
 		let svg = document.createElementNS(SVG_NS, 'svg');
@@ -110,7 +110,6 @@ export default class Game {
 		// render the score
 		this.score1.render(svg, this.player1.score);
 		this.score2.render(svg, this.player2.score);	
-		
 	}
 
 // game end DOM change
@@ -127,5 +126,4 @@ export default class Game {
 			this.gameElement.innerHTML = `<p>Player 2 wins! <br /> Press 'n' to begin a new game.</p>`;
 		}
 	}
-	
 }
