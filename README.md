@@ -84,5 +84,6 @@ backspin(player, svg) {            // this function will only alter ball path if
 
 * ball speed will increase on each paddle collision
 * backspin will only be applied when paddle is moving on contact
+* the paddles accelerate, the faster you go the more backspin you can make!
 * 'backspin' text will appear to notify user of new ball path
 * game is over when one player reaches 10, on menu select 'n' or 'N' to start a new game
