@@ -17,32 +17,39 @@ export default class Ball {
     this.x += this.vx;
     this.y += this.vy;
     
-    let hitTop = this.y - (2 * this.radius) <= 0;
-    let hitBottom = this.y + (2 * this.radius) >= this.boardHeight;
-
-    if (hitTop || hitBottom) {  // ie. wall collision
+    this.checkWallCollision();
+    
+    if (this.hitTop || this.hitBottom) {  // ie. wall collision
       this.vy = -this.vy;
     }
-
+    
     this.paddleCollision(player1, player2);
-
+    
     if (this.rightPaddleCollided) { // ie. this is called until another paddle hits or a reset
-      this.backspin(player2, hitTop, hitBottom);
+      this.backspin(player2);
     } else if (this.leftPaddleCollided){
       this.backspin(player1);
     }
-
+    
     this.hotOffThePaddle = false;
-
+    
     this.rightGoal = this.x + this.radius >= this.boardWidth;
     this.leftGoal = this.x - this.radius <= 0;
-
+    
     if (this.rightGoal) {
       this.goal(player1);
     } else if (this.leftGoal) {
       this.goal(player2);
     }
 
+    // check wall collision again to avoid lagging boolean statements
+    this.checkWallCollision();
+    
+    // solves corner condition when backspin completely removes x component
+    if (this.vx === 0) {
+      this.vx = (Math.floor(Math.random() * 4));
+    }
+    
     // draw ball
     let ball = document.createElementNS( SVG_NS, 'circle');
     ball.setAttributeNS(null, 'r', this.radius);
@@ -51,11 +58,11 @@ export default class Ball {
     ball.setAttributeNS(null, 'stroke', 'white');
     ball.setAttributeNS(null, 'fill', 'white');
     ball.setAttributeNS(null, 'id', 'ball');
-
+    
     // add ball to game
     svg.appendChild(ball);
   }
-
+  
   reset() {
     if (this.rightGoal) {
       this.plusOrMinus = 1; // sends ball to opposite side after goal
@@ -64,33 +71,39 @@ export default class Ball {
     } else {
       this.plusOrMinus = Math.random() < 0.51 ? -1 : 1; // will be -1 or 1 to start
     }
-
+    
     this.rightPaddleCollided = false;
     this.leftPaddleCollided = false;
-
+    
     this.x = this.boardWidth / 2;
     this.y = this.boardHeight / 2;
-
+    
     this.vy = 0; // this solves corner case for when vy is randomly assigned 0
     while (this.vy === 0) {
       this.vy = (Math.floor(Math.random() * 4.5)); // Math.random() returns number [0,1]
     }
     this.vx = this.plusOrMinus * (6 - Math.abs(this.vy)); // since 6 > 5, x value will always be positive
   }
-
+  
   goal (player) {
     player.score++;
     this.reset();
   }
-
+  
+  checkWallCollision () {
+    this.hitTop = this.y - this.radius <= 0;
+    this.hitBottom = this.y + this.radius >= this.boardHeight;
+  }
+  
   paddleCollision(player1, player2){
     if (this.vx > 0) {
       let paddle = player2.coordinates(player2.x, player2.y, player2.width, player2.height); // returns an array with coordinates for paddle in space
       let [leftX, rightX, topY, bottomY] = paddle;
-
+      
       if ((this.x + this.radius >= leftX) && 
-          (this.x + this.radius <= rightX) &&
-          (this.y >= topY && this.y <= bottomY)) {
+      (this.x + this.radius <= rightX) &&
+      (this.y + this.radius >= topY) && 
+      (this.y - this.radius <= bottomY)) {
         this.vx = -this.vx - CONFIG.ballSpeedIncrease;
         if (this.vy > 0) {   // on paddle collision ball speed increases
           this.vy += CONFIG.ballSpeedIncrease;  
@@ -113,7 +126,7 @@ export default class Ball {
       
       if ((this.x - this.radius <= rightX) && 
       (this.x - this.radius >= leftX) &&
-      (this.y >= topY && this.y <= bottomY)) {
+      (this.y + this.radius >= topY && this.y - this.radius <= bottomY)) {
         this.vx = -this.vx + CONFIG.ballSpeedIncrease;
         if (this.vy > 0) {   // on paddle collision ball speed increases
           this.vy += CONFIG.ballSpeedIncrease;  
@@ -132,7 +145,7 @@ export default class Ball {
     }
   }
 
-  backspin(player, hitTop, hitBottom) {            // this function will only alter ball path if this.ballSpinConstant > 0
+  backspin(player) {            // this function will only alter ball path if this.ballSpinConstant > 0
     if (this.hotOffThePaddle) { 
       this.ballSpinConstant = CONFIG.spinConst * player.speedDelta;
       this.previousSpin = this.ballSpinConstant;
@@ -142,7 +155,6 @@ export default class Ball {
 
     let spinVectorX = this.vy * this.ballSpinConstant;   // to create a 'spin' we have to apply a vector perpendicular to [vx, vy]
     let spinVectorY = -this.vx * this.ballSpinConstant; // by definition, this vector is [vy, -vx]
-
 
     if (player.player === 'player2') {             // logic to reverse backspin direction depending on paddle side
       this.vx += spinVectorX;  
@@ -163,20 +175,14 @@ export default class Ball {
     }
     
     if (this.ballSpinConstant !== 0) {
-      if (hitTop || hitBottom) {        // if we hit a wall and there's still backspin 
-        this.ballSpinConstant = this.bounceDecay * this.previousSpin; // reapply the backspin
-        this.bounceDecay *= 0.87; // on the next bounce the effect of spin will be diminished
-        hitTop = !hitTop;
+      if (this.hitTop || this.hitBottom) {        // if we hit a wall and there's still backspin 
+         this.ballSpinConstant = this.bounceDecay * this.previousSpin; // reapply the backspin
+         this.bounceDecay *= 0.8;
+      } 
+      if (this.bounceDecay < 1.2) { // only a max of 2 bounces is allowed
+        this.ballSpinConstant = 0;
       }
     }
-    // if (this.ballSpinConstant !== 0) {
-    //   console.log(`speedDelta: ${player.speedDelta}, ballSpinConstant: ${this.ballSpinConstant}`);
-    //   console.log(`vy: ${this.vy}, vx: ${this.vx}`);
-    // }
   }
 }
 
-// TODO reset velocities on collisions, how will I make it look realistic to backspin?
-// TODO play with constants to get pretty curves.. pretty close
-// TODO condition if vx = 0
-// remove console logs

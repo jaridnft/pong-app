@@ -18,5 +18,5 @@ export const CONFIG = {
     ballRadius: 8,
     spinConst: 0.0035, // for best results keep between (0.002, 0.045)
     spinDecay: 0.965, // must be between (0, 1)
-    ballSpeedIncrease: 0.4 // for be results be betweeb (0.2, 0.6)
+    ballSpeedIncrease: 0.35 // for be results be betweeb (0.2, 0.6)
 }

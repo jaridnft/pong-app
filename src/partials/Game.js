@@ -86,7 +86,7 @@ export default class Game {
 		
 		// repaint heading after game-over changes it
 		this.h1 = document.querySelector('h1');
-		this.h1.innerHTML = `PONG`;
+		this.h1.innerHTML = `BACKSPIN PONG`;
 		this.h2 = document.querySelector('h2');
 		this.h2.innerHTML = `Press 'space' to pause the game.`;
 		
