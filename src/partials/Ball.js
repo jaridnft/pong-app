@@ -26,9 +26,9 @@ export default class Ball {
     this.paddleCollision(player1, player2);
     
     if (this.rightPaddleCollided) { // ie. this is called until another paddle hits or a reset
-      this.backspin(player2);
+      this.backspin(player2, svg);
     } else if (this.leftPaddleCollided){
-      this.backspin(player1);
+      this.backspin(player1, svg);
     }
     
     this.hotOffThePaddle = false;
@@ -41,9 +41,6 @@ export default class Ball {
     } else if (this.leftGoal) {
       this.goal(player2);
     }
-
-    // check wall collision again to avoid lagging boolean statements
-    this.checkWallCollision();
     
     // solves corner condition when backspin completely removes x component
     if (this.vx === 0) {
@@ -102,8 +99,8 @@ export default class Ball {
       
       if ((this.x + this.radius >= leftX) && 
       (this.x + this.radius <= rightX) &&
-      (this.y + this.radius >= topY) && 
-      (this.y - this.radius <= bottomY)) {
+      (this.y >= topY) && 
+      (this.y <= bottomY)) {
         this.vx = -this.vx - CONFIG.ballSpeedIncrease;
         if (this.vy > 0) {   // on paddle collision ball speed increases
           this.vy += CONFIG.ballSpeedIncrease;  
@@ -145,7 +142,7 @@ export default class Ball {
     }
   }
 
-  backspin(player) {            // this function will only alter ball path if this.ballSpinConstant > 0
+  backspin(player, svg) {            // this function will only alter ball path if this.ballSpinConstant > 0
     if (this.hotOffThePaddle) { 
       this.ballSpinConstant = CONFIG.spinConst * player.speedDelta;
       this.previousSpin = this.ballSpinConstant;
@@ -173,8 +170,22 @@ export default class Ball {
     } else {
       this.ballSpinConstant = 0; 
     }
-    
+
+    let backspinText = document.createElementNS( SVG_NS, 'text');
+    backspinText.setAttributeNS(null, 'font-family', 'Silkscreen Web');
+    backspinText.setAttributeNS(null, 'font-size', this.size);
+    backspinText.setAttributeNS(null, 'fill', 'white');
+    if (this.rightPaddleCollided) {
+      backspinText.setAttributeNS(null, 'x', (0.78 * this.boardWidth));
+    } else if (this.leftPaddleCollided) {
+      backspinText.setAttributeNS(null, 'x', (0.1 * this.boardWidth));
+    }
+    backspinText.setAttributeNS(null, 'y', 15);
+    svg.appendChild(backspinText);
+
     if (this.ballSpinConstant !== 0) {
+      backspinText.textContent = 'backspin!';
+
       if (this.hitTop || this.hitBottom) {        // if we hit a wall and there's still backspin 
          this.ballSpinConstant = this.bounceDecay * this.previousSpin; // reapply the backspin
          this.bounceDecay *= 0.8;
@@ -182,6 +193,8 @@ export default class Ball {
       if (this.bounceDecay < 1.2) { // only a max of 2 bounces is allowed
         this.ballSpinConstant = 0;
       }
+    } else {
+      backspinText.textContent = '';
     }
   }
 }
