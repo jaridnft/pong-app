@@ -88,7 +88,7 @@ export default class Game {
 		this.h1 = document.querySelector('h1');
 		this.h1.innerHTML = `BACKSPIN PONG`;
 		this.h2 = document.querySelector('h2');
-		this.h2.innerHTML = `Press 'space' to pause the game, first player to 10 wins!`;
+		this.h2.innerHTML = `Press 'space' to pause the game, first player to ${CONFIG.maxScore} wins!`;
 		
 		// create new elements
 		let svg = document.createElementNS(SVG_NS, 'svg');
