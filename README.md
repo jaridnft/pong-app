@@ -1,6 +1,6 @@
 # Pong game with 'backspin' physics engine
 
-An enchancement to the class basic pong game using SVG and requestAnimationFrame(). 
+An enchancement to the classic basic pong game using SVG and requestAnimationFrame(). 
 
 Like the real game it's based on, ping pong, hitting the ball while your paddle is moving will create a backspin effect.
 
