@@ -1,6 +1,6 @@
 # Pong game with 'backspin' physics engine
 
-#### Author: Jarid Warren [<jaridwarren@gmail.com>]
+#### Author: Jarid Warren [ <jaridwarren@gmail.com> ]
 
 An enchancement to the classic basic pong game using SVG and requestAnimationFrame(). 
 
