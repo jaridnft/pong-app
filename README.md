@@ -4,6 +4,8 @@ An enchancement to the classic basic pong game using SVG and requestAnimationFra
 
 Like the real game it's based on, ping pong, hitting the ball while your paddle is moving will create a backspin effect.
 
+![alt text](./demo.gif "Backspin Pong Demo")
+
 ## Motivation
 
 This project was an opportunity to practice modularity with object oriented programming. 
