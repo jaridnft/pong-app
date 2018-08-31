@@ -16,9 +16,9 @@ In addition, it was a chance to challenge myself by applying some linear algebra
 
 ## Technology
 
-- Vanilla JavaScript ( [requestAnimationFrame()](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) )
-- [Webpack](http:https://webpack.js.org/)
-- HTML/CSS
+- JavaScript ES6 ( [requestAnimationFrame()](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) )
+- NPM / [Webpack](http:https://webpack.js.org/)
+- HTML5 / CSS3
 
 ## Code Sample
 
@@ -58,39 +58,52 @@ backspin(player, svg) {            // this function will only alter ball path if
 ```
 
 ## Setup
+Download or clone repo, then run the following commands in terminal:
 
-**Install dependencies:**
+**Initialize NPM:**
 
-`> npm i`
+`> npm init` 
 
-**Run locally with Webpack Dev Server:**
+**Install Webpack:**
 
-`> npm start`
+`> npm install`
 
-**Build for production:**
+**Build project:**
 
-`> npm run build`
+`> webpack`
+
+**Build project for production (compression):**
+
+`> webpack -p`
+
+**Launch dev server to automatically update changes:**
+
+`> webpack-dev-server`
 
 ## Keys
 
 **Player 1:**
 
-- w: up
-- s: down
+ * w: up
+ * s: down
 
 **Player 2:**
 
-- ▲ : up
-- ▼: down
+ * ▲ : up
+ * ▼: down
 
 **Both Players**
 
-- spacebar: pause
+ * spacebar: pause
 
 ## More Game Information
 
-- ball speed will increase on each paddle collision
-- backspin will only be applied when paddle is moving on contact
-- the paddles accelerate, the faster you go the more backspin you can make!
-- 'backspin' text will appear to notify user of new ball path
-- game is over when one player reaches 10, on menu select 'n' or 'N' to start a new game
+* ball speed will increase on each paddle collision
+* backspin will only be applied when paddle is moving on contact
+* the paddles accelerate, the faster you go the more backspin you can make!
+* 'backspin' text will appear to notify user of new ball path
+* game is over when one player reaches 10, on menu select 'n' or 'N' to start a new game
+
+## @TODO
+
+* Add start menu that gives user 1 player (with AI opponent) or 2 player option
