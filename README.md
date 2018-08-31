@@ -19,6 +19,7 @@ In addition, it was a chance to challenge myself by applying some linear algebra
 - JavaScript ES6 ( [requestAnimationFrame()](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) )
 - NPM / [Webpack](http:https://webpack.js.org/)
 - HTML5 / CSS3
+- Rendering Engine / SVG
 
 ## Code Sample
 
