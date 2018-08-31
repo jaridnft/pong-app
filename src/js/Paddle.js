@@ -1,4 +1,4 @@
-import { SVG_NS, CONFIG } from "../settings";
+import { SVG_NS, CONFIG } from './settings';
 
 export default class Paddle {
   constructor(boardHeight, width, height, x, y, up, down, player) {
@@ -16,7 +16,7 @@ export default class Paddle {
     this.keyState = {};
 
     document.addEventListener(
-      "keydown",
+      'keydown',
       event => {
         this.keyState[event.key || event.which] = true;
       },
@@ -24,7 +24,7 @@ export default class Paddle {
     );
 
     document.addEventListener(
-      "keyup",
+      'keyup',
       event => {
         this.keyState[event.key || event.which] = false;
       },
@@ -38,13 +38,13 @@ export default class Paddle {
     this.moveDetect();
 
     // draw paddle
-    let paddle = document.createElementNS(SVG_NS, "rect");
-    paddle.setAttributeNS(null, "x", this.x);
-    paddle.setAttributeNS(null, "y", this.y);
-    paddle.setAttributeNS(null, "width", this.width);
-    paddle.setAttributeNS(null, "height", this.height);
-    paddle.setAttributeNS(null, "stroke", "white");
-    paddle.setAttributeNS(null, "fill", "white");
+    let paddle = document.createElementNS(SVG_NS, 'rect');
+    paddle.setAttributeNS(null, 'x', this.x);
+    paddle.setAttributeNS(null, 'y', this.y);
+    paddle.setAttributeNS(null, 'width', this.width);
+    paddle.setAttributeNS(null, 'height', this.height);
+    paddle.setAttributeNS(null, 'stroke', 'white');
+    paddle.setAttributeNS(null, 'fill', 'white');
 
     // add paddle to game
     svg.appendChild(paddle);

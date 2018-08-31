@@ -120,7 +120,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: "";
+  content: '';
   content: none;
 }
 table {
@@ -133,13 +133,13 @@ table {
  */
 
 @font-face {
-  font-family: "Silkscreen Web";
-  src: url("../../public/fonts/slkscr-webfont.eot");
-  src: url("../../public/fonts/slkscr-webfont.eot?#iefix")
-      format("embedded-opentype"),
-    url("../../public/fonts/slkscr-webfont.woff") format("woff"),
-    url("../../public/fonts/slkscr-webfont.ttf") format("truetype"),
-    url("../../public/fonts/slkscr-webfont.svg#silkscreennormal") format("svg");
+  font-family: 'Silkscreen Web';
+  src: url('../assets/fonts/slkscr-webfont.eot');
+  src: url('../assets/fonts/slkscr-webfont.eot?#iefix')
+      format('embedded-opentype'),
+    url('../assets/fonts/slkscr-webfont.woff') format('woff'),
+    url('../assets/fonts/slkscr-webfont.ttf') format('truetype'),
+    url('../assets/fonts/slkscr-webfont.svg#silkscreennormal') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -155,7 +155,7 @@ html {
 body {
   align-items: center;
   display: flex;
-  font-family: "Silkscreen Web", monotype;
+  font-family: 'Silkscreen Web', monotype;
   height: 100vh;
   justify-content: center;
   width: 100%;

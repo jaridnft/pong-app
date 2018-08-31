@@ -1,8 +1,8 @@
-import { SVG_NS, KEYS, CONFIG } from "../settings";
-import Board from "./Board"; // to instantiate classes
-import Paddle from "./Paddle";
-import Ball from "./Ball";
-import Score from "./Score";
+import { SVG_NS, KEYS, CONFIG } from './settings';
+import Board from './Board'; // to instantiate classes
+import Paddle from './Paddle';
+import Ball from './Ball';
+import Score from './Score';
 
 export default class Game {
   constructor(element, width, height) {
@@ -28,7 +28,7 @@ export default class Game {
       (this.height - this.paddleHeight) / 2,
       KEYS.upOne,
       KEYS.downOne,
-      "player1"
+      'player1'
     );
 
     // instantiate player2
@@ -40,7 +40,7 @@ export default class Game {
       (this.height - this.paddleHeight) / 2,
       KEYS.upTwo,
       KEYS.downTwo,
-      "player2"
+      'player2'
     );
 
     // instantiate ball
@@ -50,7 +50,7 @@ export default class Game {
     this.score1 = new Score(this.width / 2 - 50, 30, 30);
     this.score2 = new Score(this.width / 2 + 25, 30, 30);
 
-    document.addEventListener("keydown", event => {
+    document.addEventListener('keydown', event => {
       if (event.key === KEYS.spaceBar) {
         this.pause = !this.pause;
       } else if (event.key === KEYS.n || event.key === KEYS.N) {
@@ -59,8 +59,8 @@ export default class Game {
     });
 
     this.gameElement.insertAdjacentElement(
-      "beforebegin",
-      document.createElement("h2")
+      'beforebegin',
+      document.createElement('h2')
     );
   } // end of constructor
 
@@ -82,21 +82,21 @@ export default class Game {
     this.newGame = false;
 
     // clear out existing elements
-    this.gameElement.innerHTML = "";
+    this.gameElement.innerHTML = '';
 
     // repaint heading after game-over changes it
-    this.h1 = document.querySelector("h1");
+    this.h1 = document.querySelector('h1');
     this.h1.innerHTML = `BACKSPIN PONG`;
-    this.h2 = document.querySelector("h2");
+    this.h2 = document.querySelector('h2');
     this.h2.innerHTML = `Press 'space' to pause the game, first player to ${
       CONFIG.maxScore
     } wins!`;
 
     // create new elements
-    let svg = document.createElementNS(SVG_NS, "svg");
-    svg.setAttributeNS(null, "width", this.width);
-    svg.setAttributeNS(null, "height", this.height);
-    svg.setAttributeNS(null, "viewBox", `0 0 ${this.width} ${this.height}`);
+    let svg = document.createElementNS(SVG_NS, 'svg');
+    svg.setAttributeNS(null, 'width', this.width);
+    svg.setAttributeNS(null, 'height', this.height);
+    svg.setAttributeNS(null, 'viewBox', `0 0 ${this.width} ${this.height}`);
     this.gameElement.appendChild(svg);
 
     // render the board

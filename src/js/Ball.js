@@ -1,4 +1,4 @@
-import { SVG_NS, CONFIG } from "../settings";
+import { SVG_NS, CONFIG } from './settings';
 
 export default class Ball {
   constructor(radius, boardWidth, boardHeight) {
@@ -9,7 +9,7 @@ export default class Ball {
     // set initial position of ball
     this.reset();
 
-    this.ping = new Audio("public/sounds/pong-01.wav");
+    this.ping = new Audio('public/sounds/pong-01.wav');
   }
 
   render(svg, player1, player2) {
@@ -49,13 +49,13 @@ export default class Ball {
     }
 
     // draw ball
-    let ball = document.createElementNS(SVG_NS, "circle");
-    ball.setAttributeNS(null, "r", this.radius);
-    ball.setAttributeNS(null, "cx", this.x); // controls ball movement
-    ball.setAttributeNS(null, "cy", this.y); // controls ball movement
-    ball.setAttributeNS(null, "stroke", "white");
-    ball.setAttributeNS(null, "fill", "white");
-    ball.setAttributeNS(null, "id", "ball");
+    let ball = document.createElementNS(SVG_NS, 'circle');
+    ball.setAttributeNS(null, 'r', this.radius);
+    ball.setAttributeNS(null, 'cx', this.x); // controls ball movement
+    ball.setAttributeNS(null, 'cy', this.y); // controls ball movement
+    ball.setAttributeNS(null, 'stroke', 'white');
+    ball.setAttributeNS(null, 'fill', 'white');
+    ball.setAttributeNS(null, 'id', 'ball');
 
     // add ball to game
     svg.appendChild(ball);
@@ -168,7 +168,7 @@ export default class Ball {
     let spinVectorX = this.vy * this.ballSpinConstant; // to create a 'spin' we have to apply a vector perpendicular to [vx, vy]
     let spinVectorY = -this.vx * this.ballSpinConstant; // by definition, this vector is [vy, -vx]
 
-    if (player.player === "player2") {
+    if (player.player === 'player2') {
       // logic to reverse backspin direction depending on paddle side
       this.vx += spinVectorX;
       this.vy += spinVectorY;
@@ -187,20 +187,20 @@ export default class Ball {
       this.ballSpinConstant = 0;
     }
 
-    let backspinText = document.createElementNS(SVG_NS, "text");
-    backspinText.setAttributeNS(null, "font-family", "Silkscreen Web");
-    backspinText.setAttributeNS(null, "font-size", this.size);
-    backspinText.setAttributeNS(null, "fill", "white");
+    let backspinText = document.createElementNS(SVG_NS, 'text');
+    backspinText.setAttributeNS(null, 'font-family', 'Silkscreen Web');
+    backspinText.setAttributeNS(null, 'font-size', this.size);
+    backspinText.setAttributeNS(null, 'fill', 'white');
     if (this.rightPaddleCollided) {
-      backspinText.setAttributeNS(null, "x", 0.78 * this.boardWidth);
+      backspinText.setAttributeNS(null, 'x', 0.78 * this.boardWidth);
     } else if (this.leftPaddleCollided) {
-      backspinText.setAttributeNS(null, "x", 0.1 * this.boardWidth);
+      backspinText.setAttributeNS(null, 'x', 0.1 * this.boardWidth);
     }
-    backspinText.setAttributeNS(null, "y", 15);
+    backspinText.setAttributeNS(null, 'y', 15);
     svg.appendChild(backspinText);
 
     if (this.ballSpinConstant !== 0) {
-      backspinText.textContent = "backspin!";
+      backspinText.textContent = 'backspin!';
 
       if (this.hitTop || this.hitBottom) {
         // if we hit a wall and there's still backspin
@@ -212,7 +212,7 @@ export default class Ball {
         this.ballSpinConstant = 0;
       }
     } else {
-      backspinText.textContent = "";
+      backspinText.textContent = '';
     }
   }
 }
