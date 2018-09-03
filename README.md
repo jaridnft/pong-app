@@ -17,7 +17,7 @@ In addition, it was a chance to challenge myself by applying some linear algebra
 ## Technology
 
 - <img src="./assets/images/readme-images/js.svg" width="15"> JavaScript ES6 
-- <img src="./assets/images/readme-images/npm.svg" width="20"> NPM / <img src="./assets/images/readme-images/webpack.svg" width="15">  Webpack
+- <img src="./assets/images/readme-images/npm.svg" width="20"> NPM / <img src="./assets/images/readme-images/webpack.svg" width="15">  Webpack / <img src="./assets/images/readme-images/babel.svg" width="30"> Babel
 - <img src="./assets/images/readme-images/html5.svg" width="12"> HTML5 / <img src="./assets/images/readme-images/css3.svg" width="12"> CSS3
 - Rendering Engine / SVG
 
