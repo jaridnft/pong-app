@@ -6,7 +6,7 @@ An enchancement to the classic basic pong game using SVG and requestAnimationFra
 
 Like the real game it's based on, ping pong, hitting the ball while your paddle is moving will create a backspin effect.
 
-![alt text](./assets/images/demo.gif 'Backspin Pong Demo')
+![alt text](./assets/images/readme-images/demo.gif 'Backspin Pong Demo')
 
 ## Motivation
 
@@ -16,9 +16,9 @@ In addition, it was a chance to challenge myself by applying some linear algebra
 
 ## Technology
 
-- JavaScript ES6 ( [requestAnimationFrame()](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) )
-- NPM / [Webpack](http:https://webpack.js.org/)
-- HTML5 / CSS3
+- <img src="./assets/images/readme-images/js.svg" width="15"> JavaScript ES6 
+- <img src="./assets/images/readme-images/npm.svg" width="20"> NPM / <img src="./assets/images/readme-images/webpack.svg" width="15">  Webpack
+- <img src="./assets/images/readme-images/html5.svg" width="12"> HTML5 / <img src="./assets/images/readme-images/css3.svg" width="12"> CSS3
 - Rendering Engine / SVG
 
 ## Code Sample
