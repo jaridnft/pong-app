@@ -104,7 +104,3 @@ Download or clone repo, then run the following commands in terminal:
 * the paddles accelerate, the faster you go the more backspin you can make!
 * 'backspin' text will appear to notify user of new ball path
 * game is over when one player reaches 10, on menu select 'n' or 'N' to start a new game
-
-## @TODO
-
-* Add start menu that gives user 1 player (with AI opponent) or 2 player option
